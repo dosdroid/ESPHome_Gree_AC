@@ -27,7 +27,7 @@ api:
 ota:
  
 external_components:
-  - source: github://Buzzzsaw/ESPHome_Gree_AC
+  - source: github://dosdroid/ESPHome_Gree_AC
     components: [ gree ]
 
 sensor:
