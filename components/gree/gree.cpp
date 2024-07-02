@@ -175,7 +175,7 @@ void GreeClimate::setFanMode(const climate::ClimateFanMode fanMode)
    //   this->transmitter_->setFan(kGreeFanMax);
    //   this->transmitter_->setTurbo(true);
    //   break;
-   // default:
+    default:
       ESP_LOGE(TAG, "Invalid climate fan mode %d", fanMode);
       return;
     }
