@@ -18,7 +18,7 @@ private:
   void setClimateMode(const climate::ClimateMode climateMode);
   void setTargetTemperature(const float targetTemperature);
   void setFanMode(const climate::ClimateFanMode fanMode);
-  void setSwingMode(const climate::ClimateSwingMode swingMode);
+  //void setSwingMode(const climate::ClimateSwingMode swingMode);
 
 public:
   GreeClimate(InternalGPIOPin *pin);
