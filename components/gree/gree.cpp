@@ -38,7 +38,7 @@ void GreeClimate::setup()
   {
     // Set some arbitrary defaults.
     this->mode = climate::CLIMATE_MODE_OFF;
-    this->fan_mode = climate::CLIMATE_FAN_LOW;
+    this->fan_mode = climate::CLIMATE_FAN_HIGH;
     this->swing_mode = climate::CLIMATE_SWING_OFF;
     this->target_temperature = traits().get_visual_min_temperature();
   }
@@ -68,7 +68,7 @@ climate::ClimateTraits GreeClimate::traits()
   std::set<climate::ClimateMode> climateModes; 
   climateModes.insert(climate::CLIMATE_MODE_OFF);
   climateModes.insert(climate::CLIMATE_MODE_COOL);
-  climateModes.insert(climate::CLIMATE_MODE_HEAT);
+  //climateModes.insert(climate::CLIMATE_MODE_HEAT);
   climateModes.insert(climate::CLIMATE_MODE_DRY);
   climateModes.insert(climate::CLIMATE_MODE_FAN_ONLY);
   traits.set_supported_modes(climateModes);
@@ -78,13 +78,13 @@ climate::ClimateTraits GreeClimate::traits()
   climateFanModes.insert(climate::CLIMATE_FAN_LOW);
   climateFanModes.insert(climate::CLIMATE_FAN_MEDIUM);
   climateFanModes.insert(climate::CLIMATE_FAN_HIGH);
-  climateFanModes.insert(climate::CLIMATE_FAN_FOCUS);
+  //climateFanModes.insert(climate::CLIMATE_FAN_FOCUS);
   traits.set_supported_fan_modes(climateFanModes);
 
-  std::set<climate::ClimateSwingMode> climateSwingModes;
-  climateSwingModes.insert(climate::CLIMATE_SWING_OFF);
-  climateSwingModes.insert(climate::CLIMATE_SWING_VERTICAL);
-  traits.set_supported_swing_modes(climateSwingModes);
+ // std::set<climate::ClimateSwingMode> climateSwingModes;
+ // climateSwingModes.insert(climate::CLIMATE_SWING_OFF);
+ // climateSwingModes.insert(climate::CLIMATE_SWING_VERTICAL);
+ // traits.set_supported_swing_modes(climateSwingModes);
 
   return traits;
 }
@@ -103,10 +103,10 @@ void GreeClimate::control(const climate::ClimateCall &call)
   {
     setFanMode(*call.get_fan_mode());
   }
-  if (call.get_swing_mode().has_value())
-  {
-    setSwingMode(*call.get_swing_mode());
-  }
+//  if (call.get_swing_mode().has_value())
+//  {
+//    setSwingMode(*call.get_swing_mode());
+//  }
 
   this->transmitter_->send();
 }
@@ -115,10 +115,10 @@ void GreeClimate::setClimateMode(const climate::ClimateMode climateMode)
 {
   switch (climateMode)
   {
-  case climate::CLIMATE_MODE_HEAT:
-    this->transmitter_->setMode(kGreeHeat);
-    this->transmitter_->on();
-    break;
+ // case climate::CLIMATE_MODE_HEAT:
+ //   this->transmitter_->setMode(kGreeHeat);
+ //   this->transmitter_->on();
+ //   break;
   case climate::CLIMATE_MODE_COOL:
     this->transmitter_->setMode(kGreeCool);
     this->transmitter_->on();
@@ -171,11 +171,11 @@ void GreeClimate::setFanMode(const climate::ClimateFanMode fanMode)
       this->transmitter_->setFan(kGreeFanMax);
       this->transmitter_->setTurbo(false);
       break;
-    case climate::CLIMATE_FAN_FOCUS:
-      this->transmitter_->setFan(kGreeFanMax);
-      this->transmitter_->setTurbo(true);
-      break;
-    default:
+   // case climate::CLIMATE_FAN_FOCUS:
+   //   this->transmitter_->setFan(kGreeFanMax);
+   //   this->transmitter_->setTurbo(true);
+   //   break;
+   // default:
       ESP_LOGE(TAG, "Invalid climate fan mode %d", fanMode);
       return;
     }
@@ -184,24 +184,24 @@ void GreeClimate::setFanMode(const climate::ClimateFanMode fanMode)
     this->publish_state();
 }
 
-void GreeClimate::setSwingMode(const climate::ClimateSwingMode swingMode)
-{
-  switch (swingMode)
-  {
-  case climate::CLIMATE_SWING_OFF:
-    this->transmitter_->setSwingVertical(false, kGreeSwingLastPos);
-    break;
-  case climate::CLIMATE_SWING_VERTICAL:
-    this->transmitter_->setSwingVertical(true, kGreeSwingAuto);
-    break;
-  default:
-    ESP_LOGE(TAG, "Invalid climate swing mode %d", swingMode);
-    return;
-  }
+//void GreeClimate::setSwingMode(const climate::ClimateSwingMode swingMode)
+//{
+//  switch (swingMode)
+//  {
+//  case climate::CLIMATE_SWING_OFF:
+//    this->transmitter_->setSwingVertical(false, kGreeSwingLastPos);
+//    break;
+//  case climate::CLIMATE_SWING_VERTICAL:
+//    this->transmitter_->setSwingVertical(true, kGreeSwingAuto);
+//    break;
+//  default:
+//    ESP_LOGE(TAG, "Invalid climate swing mode %d", swingMode);
+//    return;
+//  }
 
-  this->swing_mode = swingMode;
-  this->publish_state();
-}
+//  this->swing_mode = swingMode;
+//  this->publish_state();
+//}
 
 } // namespace gree
 } // namespace esphome
